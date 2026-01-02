@@ -12,6 +12,7 @@ class ExamplePage extends Component
 
     public function test() {
         Toaster::success('Test Success!!');
+        Toaster::info('Hello ' . auth()->user()->username);
     }
 
     public function render()

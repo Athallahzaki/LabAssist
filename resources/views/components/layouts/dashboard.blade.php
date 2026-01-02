@@ -12,7 +12,7 @@
       </main>
 
       <!-- Footer -->
-      <footer class="p-4 bg-gray-100">
+      <footer class="p-4 bg-neutral text-neutral-content">
         @Kelompok 3 - LabAssist
       </footer>
 
