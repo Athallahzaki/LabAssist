@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
         'student_id',
         'lab_id',
@@ -34,3 +36,4 @@ class Ticket extends Model
         return $this->hasMany(TicketAssignment::class);
     }
 }
+

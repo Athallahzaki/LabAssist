@@ -5,6 +5,10 @@ use App\Livewire\Pages\Auth\Register;
 use App\Livewire\Pages\ExamplePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Pages\TicketIndex;
+use App\Livewire\Pages\TicketCreate;
+use App\Livewire\Pages\TicketEdit;
+use App\Livewire\Pages\TicketAssign;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,4 +30,11 @@ Route::middleware(['auth'])->group(function () {
 
         return redirect()->route('login');
     })->name('logout');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tickets', TicketIndex::class)->name('tickets.index');
+    Route::get('/tickets/create', TicketCreate::class)->name('tickets.create');
+    Route::get('/tickets/{ticket}/edit', TicketEdit::class)->name('tickets.edit');
+    Route::get('/tickets/{ticket}/assign', TicketAssign::class)->name('tickets.assign');
 });
