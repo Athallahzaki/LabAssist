@@ -5,6 +5,8 @@ use App\Livewire\Pages\Auth\Register;
 use App\Livewire\Pages\ExamplePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Pages\Approval\BookingApproval;
+use App\Livewire\Pages\Approval\BookingApprovalHistory;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,4 +28,11 @@ Route::middleware(['auth', 'role:admin,student'])->group(function () {
 
         return redirect()->route('login');
     })->name('logout');
+
+
+    Route::get('/approval', BookingApproval::class)
+        ->name('approval.bookings');
+
+    Route::get('/approval/history', BookingApprovalHistory::class)
+        ->name('approval.bookings.history');
 });
