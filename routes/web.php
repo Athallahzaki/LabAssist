@@ -17,6 +17,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'role:admin,student'])->group(function () {
     Route::get('/dashboard', ExamplePage::class)->name('dashboard');
+    Route::get('/labs', \App\Livewire\Pages\Lab\LabIndex::class)->name('labs.index');
+    Route::get('/labs/create', \App\Livewire\Pages\Lab\LabCreate::class)->name('labs.create');
+    Route::get('/labs/{lab}/edit', \App\Livewire\Pages\Lab\LabEdit::class)->name('labs.edit');
 
     Route::post('/logout', function () {
         Auth::logout();
