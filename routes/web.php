@@ -5,6 +5,9 @@ use App\Livewire\Pages\Auth\Register;
 use App\Livewire\Pages\ExamplePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\BookingIndex;
+use App\Livewire\BookingCreate;
+use App\Livewire\BookingEdit;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,3 +30,7 @@ Route::middleware(['auth', 'role:admin,student'])->group(function () {
         return redirect()->route('login');
     })->name('logout');
 });
+
+Route::get('/booking', BookingIndex::class)->name('booking.index');
+Route::get('/booking/create', BookingCreate::class)->name('booking.create');
+Route::get('/booking/{id}/edit', BookingEdit::class)->name('booking.edit');
