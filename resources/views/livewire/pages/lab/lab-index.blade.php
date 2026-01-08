@@ -11,14 +11,17 @@
     </div>
 
     {{-- ACTION --}}
+    @if(auth()->user()->isAdmin())
     <div>
         <a href="{{ route('labs.create') }}"
            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
                   bg-blue-500/15 text-blue-400
                   hover:bg-blue-500/25 transition">
+            <x-icon name='plus' />
             Tambah Lab
         </a>
     </div>
+    @endif
 
     {{-- CARD --}}
     <div class="bg-gray-900 border border-gray-800 rounded-xl shadow-sm">
@@ -65,6 +68,7 @@
                                 </span>
                             </td>
                             <td class="py-3 px-4 text-center space-x-2">
+                                @if(auth()->user()->isAdmin())
                                 <a href="{{ route('labs.edit', $lab) }}"
                                    class="px-3 py-1.5 rounded-md text-xs font-medium
                                           bg-yellow-500/15 text-yellow-400
@@ -79,6 +83,7 @@
                                         hover:bg-red-500/25 transition">
                                     Hapus
                                 </button>
+                                @endif
                             </td>
                         </tr>
                     @empty

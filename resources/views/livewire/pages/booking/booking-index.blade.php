@@ -6,7 +6,7 @@
             Data Booking
         </h2>
         <p class="text-sm text-gray-400">
-            Daftar seluruh booking laboratorium
+            Daftar booking laboratorium
         </p>
     </div>
 
@@ -15,6 +15,7 @@
         <a href="{{ route('booking.create') }}"
            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
                   bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 transition">
+            <x-icon name='plus' />
             Tambah Booking
         </a>
     </div>
@@ -68,6 +69,7 @@
                             </td>
                             {{-- AKSI --}}
                             <td class="py-3 px-4 text-center space-x-2">
+                                @if(auth()->user()->isAdmin())
                                 <a href="{{ route('booking.edit', $booking->id) }}"
                                    class="px-3 py-1.5 rounded-md text-xs
                                           bg-yellow-500/15 text-yellow-400 hover:bg-yellow-500/25">
@@ -80,6 +82,7 @@
                                            bg-red-500/15 text-red-400 hover:bg-red-500/25">
                                     Hapus
                                 </button>
+                                @endif
                             </td>
                         </tr>
                     @empty

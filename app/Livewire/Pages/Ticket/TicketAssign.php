@@ -8,10 +8,13 @@ use App\Models\Admin;
 use App\Models\Status;
 use App\Models\TicketAssignment;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Title;
 use Masmerise\Toaster\Toaster;
 
 class TicketAssign extends Component
 {
+    #[Title('Assign Ticket')]
+    
     public Ticket $ticket;
     public $admin_id;
     public $admins;

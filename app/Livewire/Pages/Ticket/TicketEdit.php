@@ -7,10 +7,13 @@ use App\Models\Ticket;
 use App\Models\Student;
 use App\Models\Lab;
 use App\Models\Status;
+use Livewire\Attributes\Title;
 use Masmerise\Toaster\Toaster;
 
 class TicketEdit extends Component
 {
+    #[Title('Edit Ticket')]
+    
     public Ticket $ticket;
     public $student_id, $lab_id, $title, $description, $ticket_status_id;
     public $students;

@@ -7,10 +7,13 @@ use App\Models\Ticket;
 use App\Models\Student;
 use App\Models\Lab;
 use App\Models\Status;
+use Livewire\Attributes\Title;
 use Masmerise\Toaster\Toaster;
 
 class TicketCreate extends Component
 {
+    #[Title('Create Ticket')]
+    
     public $student_id, $lab_id, $title, $description, $ticket_status_id;
     public $students;
     public $labs;
@@ -26,6 +29,14 @@ class TicketCreate extends Component
 
     public function mount()
     {
+        if (auth()->user()->isStudent()) {
+            $this->student_id = auth()->user()->student->id;
+
+            $this->ticket_status_id = Status::group('ticket')
+                ->where('code', 'open')
+                ->value('id');
+        }
+        
         $this->students = Student::all();
         $this->labs = Lab::all();
         $this->statuses = Status::group('ticket')->get();

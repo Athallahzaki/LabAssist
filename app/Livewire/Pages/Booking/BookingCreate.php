@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Student;
 use App\Models\Lab;
 use App\Models\Status;
+use Livewire\Attributes\Title;
 use Masmerise\Toaster\Toaster;
 
 class BookingCreate extends Component
@@ -32,6 +33,14 @@ class BookingCreate extends Component
     ];
 
     public function mount() {
+        if (auth()->user()->isStudent()) {
+            $this->student_id = auth()->user()->student->id;
+
+            $this->booking_status_id = Status::group('booking')
+                ->where('code', 'pending')
+                ->value('id');
+        }
+
         $this->students = Student::all();
         $this->labs = Lab::all();
         $this->statuses = Status::group('booking')->get();
