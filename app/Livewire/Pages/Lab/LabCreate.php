@@ -4,11 +4,14 @@ namespace App\Livewire\Pages\Lab;
 
 use App\Models\Lab;
 use App\Models\Status;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class LabCreate extends Component
 {
+    #[Title('Create Lab')]
+
     public $lab_name;
     public $capacity;
     public $lab_status_id;

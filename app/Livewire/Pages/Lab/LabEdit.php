@@ -4,11 +4,14 @@ namespace App\Livewire\Pages\Lab;
 
 use App\Models\Lab;
 use App\Models\Status;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class LabEdit extends Component
 {
+        #[Title('Edit Lab')]
+
     public Lab $lab;
     public $lab_name;
     public $capacity;

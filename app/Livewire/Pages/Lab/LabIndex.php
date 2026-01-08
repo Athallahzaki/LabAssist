@@ -3,11 +3,14 @@
 namespace App\Livewire\Pages\Lab;
 
 use App\Models\Lab;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Masmerise\Toaster\Toaster;
 
 class LabIndex extends Component
 {
+        #[Title('Labs')]
+
     public $labs;
 
     public function mount() {
