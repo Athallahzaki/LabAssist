@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->foreignId('ticket_status_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

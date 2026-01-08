@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\BookingIndex;
 use App\Livewire\BookingCreate;
 use App\Livewire\BookingEdit;
+use App\Livewire\Pages\Approval\BookingApproval;
+use App\Livewire\Pages\Approval\BookingApprovalHistory;
+use App\Livewire\Pages\Lab\LabCreate;
+use App\Livewire\Pages\Lab\LabEdit;
+use App\Livewire\Pages\Lab\LabIndex;
+use App\Livewire\Pages\Ticket\TicketIndex;
+use App\Livewire\Pages\Ticket\TicketCreate;
+use App\Livewire\Pages\Ticket\TicketEdit;
+use App\Livewire\Pages\Ticket\TicketAssign;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +29,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'role:admin,student'])->group(function () {
     Route::get('/dashboard', ExamplePage::class)->name('dashboard');
+    Route::get('/labs', LabIndex::class)->name('labs.index');
+    Route::get('/labs/create', LabCreate::class)->name('labs.create');
+    Route::get('/labs/{lab}/edit', LabEdit::class)->name('labs.edit');
 
     Route::post('/logout', function () {
         Auth::logout();
@@ -34,3 +46,17 @@ Route::middleware(['auth', 'role:admin,student'])->group(function () {
 Route::get('/booking', BookingIndex::class)->name('booking.index');
 Route::get('/booking/create', BookingCreate::class)->name('booking.create');
 Route::get('/booking/{id}/edit', BookingEdit::class)->name('booking.edit');
+
+Route::get('/approval', BookingApproval::class)
+    ->name('approval');
+
+Route::get('/approval/history', BookingApprovalHistory::class)
+    ->name('approval.history');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tickets', TicketIndex::class)->name('tickets.index');
+    Route::get('/tickets/create', TicketCreate::class)->name('tickets.create');
+    Route::get('/tickets/{ticket}/edit', TicketEdit::class)->name('tickets.edit');
+    Route::get('/tickets/{ticket}/assign', TicketAssign::class)->name('tickets.assign');
+});
