@@ -16,6 +16,7 @@
            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
                   bg-blue-500/15 text-blue-400
                   hover:bg-blue-500/25 transition">
+            <x-icon name='document-text' />
             Lihat History
         </a>
     </div>
