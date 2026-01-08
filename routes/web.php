@@ -10,6 +10,7 @@ use App\Livewire\Pages\Booking\BookingCreate;
 use App\Livewire\Pages\Booking\BookingEdit;
 use App\Livewire\Pages\Approval\BookingApproval;
 use App\Livewire\Pages\Approval\BookingApprovalHistory;
+use App\Livewire\Pages\Dashboard;
 use App\Livewire\Pages\Lab\LabCreate;
 use App\Livewire\Pages\Lab\LabEdit;
 use App\Livewire\Pages\Lab\LabIndex;
@@ -28,7 +29,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin,student'])->group(function () {
-    Route::get('/dashboard', ExamplePage::class)->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
     
     Route::get('/labs', LabIndex::class)->name('labs.index');
 
