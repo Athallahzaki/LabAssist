@@ -39,6 +39,7 @@
                             <th class="py-3 px-4">Mahasiswa</th>
                             <th class="py-3 px-4">Lab</th>
                             <th class="py-3 px-4">Status</th>
+                            <th class="py-3 px-4">Ditangani Oleh</th>
                             <th class="py-3 px-4 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -51,7 +52,7 @@
                                 </td>
 
                                 <td class="py-3 px-4 text-gray-300">
-                                    {{ $ticket->student->name ?? '-' }}
+                                    {{ $ticket->student->display_name ?? '-' }}
                                 </td>
 
                                 <td class="py-3 px-4 text-gray-300">
@@ -61,9 +62,22 @@
                                 <td class="py-3 px-4">
                                     <span class="px-2.5 py-1 rounded-md text-xs font-medium
                                         bg-indigo-500/15 text-indigo-400">
-                                        {{ $ticket->status->name ?? '-' }}
+                                        {{ $ticket->status->label ?? '-' }}
                                     </span>
                                 </td>
+
+                                <td class="py-3 px-4 text-gray-300">
+                                    @php
+                                        $assignment = $ticket->assignments->last();
+                                    @endphp
+
+                                    @if ($assignment)
+                                        {{ $assignment->admin->display_name ?? '-' }}
+                                    @else
+                                        <span class="italic text-gray-500">Belum ditangani</span>
+                                    @endif
+                                </td>
+
 
                                 <td class="py-3 px-4 text-center space-x-2">
                                     <a href="{{ route('tickets.edit', $ticket) }}"
@@ -81,8 +95,7 @@
                                     </a>
 
                                     <button
-                                        wire:click="delete('{{ $ticket->id }}')"
-                                        onclick="return confirm('Yakin ingin menghapus ticket ini?')"
+                                        @click.prevent="if(confirm('Yakin ingin menghapus ticket ini?')) { @this.call('delete', '{{ $ticket->id }}') }"
                                         class="px-3 py-1.5 rounded-md text-xs font-medium
                                                bg-red-500/15 text-red-400
                                                hover:bg-red-500/25 transition">

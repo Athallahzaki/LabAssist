@@ -20,7 +20,7 @@
 
             <div>
                 <span class="text-gray-400">Mahasiswa:</span>
-                <span class="text-gray-300">{{ $ticket->student->name ?? '-' }}</span>
+                <span class="text-gray-300">{{ $ticket->student->display_name ?? '-' }}</span>
             </div>
 
             <div>
@@ -49,7 +49,7 @@
                         <option value="">-- Pilih Admin --</option>
                         @foreach($admins as $admin)
                             <option value="{{ $admin->id }}">
-                                {{ $admin->name }}
+                                {{ $admin->display_name }}
                             </option>
                         @endforeach
                     </select>

@@ -5,10 +5,10 @@ use App\Livewire\Pages\Auth\Register;
 use App\Livewire\Pages\ExamplePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Pages\TicketIndex;
-use App\Livewire\Pages\TicketCreate;
-use App\Livewire\Pages\TicketEdit;
-use App\Livewire\Pages\TicketAssign;
+use App\Livewire\Pages\Ticket\TicketIndex;
+use App\Livewire\Pages\Ticket\TicketCreate;
+use App\Livewire\Pages\Ticket\TicketEdit;
+use App\Livewire\Pages\Ticket\TicketAssign;
 
 Route::get('/', function () {
     return view('welcome');
