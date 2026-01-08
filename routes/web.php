@@ -19,7 +19,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', Register::class)->name('register');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:admin,student'])->group(function () {
     Route::get('/dashboard', ExamplePage::class)->name('dashboard');
 
     Route::post('/logout', function () {
