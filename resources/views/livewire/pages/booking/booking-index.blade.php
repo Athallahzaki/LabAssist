@@ -68,6 +68,7 @@
                             </td>
                             {{-- AKSI --}}
                             <td class="py-3 px-4 text-center space-x-2">
+                                @if(auth()->user()->isAdmin())
                                 <a href="{{ route('booking.edit', $booking->id) }}"
                                    class="px-3 py-1.5 rounded-md text-xs
                                           bg-yellow-500/15 text-yellow-400 hover:bg-yellow-500/25">
@@ -80,6 +81,7 @@
                                            bg-red-500/15 text-red-400 hover:bg-red-500/25">
                                     Hapus
                                 </button>
+                                @endif
                             </td>
                         </tr>
                     @empty

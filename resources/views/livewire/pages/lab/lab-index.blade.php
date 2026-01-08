@@ -65,6 +65,7 @@
                                 </span>
                             </td>
                             <td class="py-3 px-4 text-center space-x-2">
+                                @if(auth()->user()->isAdmin())
                                 <a href="{{ route('labs.edit', $lab) }}"
                                    class="px-3 py-1.5 rounded-md text-xs font-medium
                                           bg-yellow-500/15 text-yellow-400
@@ -79,6 +80,7 @@
                                         hover:bg-red-500/25 transition">
                                     Hapus
                                 </button>
+                                @endif
                             </td>
                         </tr>
                     @empty
