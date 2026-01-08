@@ -3,51 +3,59 @@
 namespace App\Livewire\Pages\Approval;
 
 use Livewire\Component;
+use App\Models\Booking;
+use App\Models\Approval;
+use App\Models\Status;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
-use App\Services\BookingApprovalService;
-use App\Models\Booking;
-
 
 class BookingApproval extends Component
 {
     #[Title('Approval Booking')]
     #[Layout('components.layouts.dashboard')]
-
     public $message = '';
 
     protected $rules = [
         'message' => 'nullable|string|max:500',
     ];
 
-    public function approve($bookingId, BookingApprovalService $service)
+    public function approve($bookingId)
+    {
+        $this->process($bookingId, 'approved');
+    }
+
+    public function reject($bookingId)
+    {
+        $this->process($bookingId, 'rejected');
+    }
+
+    private function process($bookingId, string $action)
     {
         $this->validate();
 
-        $service->approve(
-            $bookingId,
-            auth()->user()->admin->id,
-            $this->message
-        );
+        DB::transaction(function () use ($bookingId, $action) {
 
-        $this->afterAction();
-    }
+            $booking = Booking::with('status')->findOrFail($bookingId);
 
-    public function reject($bookingId, BookingApprovalService $service)
-    {
-        $this->validate();
+            $bookingStatus = Status::where('code', $action)->firstOrFail();
+            $approvalStatus = Status::where('code', $action)->firstOrFail();
 
-        $service->reject(
-            $bookingId,
-            auth()->user()->admin->id,
-            $this->message
-        );
+            // Update booking status
+            $booking->update([
+                'booking_status_id' => $bookingStatus->id,
+            ]);
 
-        $this->afterAction();
-    }
+            // Create approval
+            Approval::create([
+                'booking_id' => $booking->id,
+                'admin_id' => auth()->user()->admin->id,
+                'approval_status_id' => $approvalStatus->id,
+                'message' => $this->message,
+                'approved_at' => now(),
+            ]);
+        });
 
-    private function afterAction(): void
-    {
         $this->reset('message');
         session()->flash('success', 'Booking berhasil diproses.');
     }
@@ -55,10 +63,8 @@ class BookingApproval extends Component
     public function render()
     {
         return view('livewire.pages.approval.booking-approval', [
-            'bookings' => Booking::with(['student.user', 'lab', 'status'])
-                ->whereHas('status', fn ($q) =>
-                    $q->where('group', 'booking')->where('code', 'pending')
-                )
+            'bookings' => Booking::with(['student', 'lab', 'status'])
+                ->whereHas('status', fn ($q) => $q->where('code', 'pending'))
                 ->get(),
         ]);
     }
