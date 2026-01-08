@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Pages\Approval\BookingApproval;
 use App\Livewire\Pages\Approval\BookingApprovalHistory;
+use App\Livewire\Pages\Lab\LabCreate;
+use App\Livewire\Pages\Lab\LabEdit;
+use App\Livewire\Pages\Lab\LabIndex;
 use App\Livewire\Pages\Ticket\TicketIndex;
 use App\Livewire\Pages\Ticket\TicketCreate;
 use App\Livewire\Pages\Ticket\TicketEdit;
@@ -23,6 +26,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'role:admin,student'])->group(function () {
     Route::get('/dashboard', ExamplePage::class)->name('dashboard');
+    Route::get('/labs', LabIndex::class)->name('labs.index');
+    Route::get('/labs/create', LabCreate::class)->name('labs.create');
+    Route::get('/labs/{lab}/edit', LabEdit::class)->name('labs.edit');
 
     Route::post('/logout', function () {
         Auth::logout();
