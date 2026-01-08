@@ -9,26 +9,44 @@
 
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6 space-y-1">
-        <a href="/dashboard"
-        class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
-                text-slate-300 hover:bg-slate-800 hover:text-white transition">
+
+        <a href="{{ route('dashboard') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                  {{ request()->routeIs('dashboard') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
             <x-icon name='home' />
             <span>Dashboard</span>
         </a>
 
-        <a href="/users"
-        class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
-                text-slate-300 hover:bg-slate-800 hover:text-white transition">
-            <x-icon name='users' />
-            <span>Users</span>
+        <a href="{{ route('labs.index') }}"
+            class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                    {{ request()->routeIs('labs.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
+            <x-icon name='building-office' />
+            <span>Labs</span>
         </a>
 
-        <a href="/settings"
-        class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
-                text-slate-300 hover:bg-slate-800 hover:text-white transition">
-            <x-icon name='cog-6-tooth' />
-            <span>Settings</span>
+        <a href="{{ route('booking.index') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                  {{ request()->routeIs('booking.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
+            <x-icon name='calendar' />
+            <span>Bookings</span>
         </a>
+
+        <a href="{{ route('tickets.index') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                  {{ request()->routeIs('tickets.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
+            <x-icon name='ticket' />
+            <span>Tickets</span>
+        </a>
+
+        @if(auth()->user()->isAdmin())
+            <a href="{{ route('approval.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                      {{ request()->routeIs('approval.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
+                <x-icon name='check-circle' />
+                <span>Approvals</span>
+            </a>
+        @endif
+
     </nav>
 
     <!-- User Menu -->

@@ -11,6 +11,7 @@
     </div>
 
     {{-- ACTION --}}
+    @if(auth()->user()->isAdmin())
     <div>
         <a href="{{ route('labs.create') }}"
            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
@@ -19,6 +20,7 @@
             Tambah Lab
         </a>
     </div>
+    @endif
 
     {{-- CARD --}}
     <div class="bg-gray-900 border border-gray-800 rounded-xl shadow-sm">
