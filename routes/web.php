@@ -35,10 +35,10 @@ Route::middleware(['auth', 'role:admin,student'])->group(function () {
 
 
     Route::get('/approval', BookingApproval::class)
-        ->name('approval.bookings');
+        ->name('approval');
 
     Route::get('/approval/history', BookingApprovalHistory::class)
-        ->name('approval.bookings.history');
+        ->name('approval.history');
 });
 
 Route::middleware(['auth'])->group(function () {

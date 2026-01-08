@@ -9,16 +9,25 @@ use App\Models\Status;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
+use Masmerise\Toaster\Toaster;
 
 class BookingApproval extends Component
 {
     #[Title('Approval Booking')]
     #[Layout('components.layouts.dashboard')]
     public $message = '';
+    public $bookings;
 
     protected $rules = [
         'message' => 'nullable|string|max:500',
     ];
+
+    public function mount() {
+        $bookingPendingStatus = Status::group('booking')->where('code', 'pending')->firstOrFail();
+        $this->bookings = Booking::with(['student', 'lab', 'status'])
+                ->where('booking_status_id', $bookingPendingStatus->id)
+                ->get();
+    }
 
     public function approve($bookingId)
     {
@@ -38,8 +47,8 @@ class BookingApproval extends Component
 
             $booking = Booking::with('status')->findOrFail($bookingId);
 
-            $bookingStatus = Status::where('code', $action)->firstOrFail();
-            $approvalStatus = Status::where('code', $action)->firstOrFail();
+            $bookingStatus = Status::group('booking')->where('code', $action)->firstOrFail();
+            $approvalStatus = Status::group('approval')->where('code', $action)->firstOrFail();
 
             // Update booking status
             $booking->update([
@@ -54,18 +63,16 @@ class BookingApproval extends Component
                 'message' => $this->message,
                 'approved_at' => now(),
             ]);
+
+            $this->bookings = $this->bookings->where('id', '!=', $booking->id);
         });
 
         $this->reset('message');
-        session()->flash('success', 'Booking berhasil diproses.');
+        Toaster::success('Booking berhasl diproses.');
     }
 
     public function render()
     {
-        return view('livewire.pages.approval.booking-approval', [
-            'bookings' => Booking::with(['student', 'lab', 'status'])
-                ->whereHas('status', fn ($q) => $q->where('code', 'pending'))
-                ->get(),
-        ]);
+        return view('livewire.pages.approval.booking-approval');
     }
 }
