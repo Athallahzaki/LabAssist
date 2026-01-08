@@ -33,6 +33,14 @@ class BookingCreate extends Component
     ];
 
     public function mount() {
+        if (auth()->user()->isStudent()) {
+            $this->student_id = auth()->user()->student->id;
+
+            $this->booking_status_id = Status::group('booking')
+                ->where('code', 'pending')
+                ->value('id');
+        }
+
         $this->students = Student::all();
         $this->labs = Lab::all();
         $this->statuses = Status::group('booking')->get();

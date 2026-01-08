@@ -6,7 +6,7 @@
             Data Booking
         </h2>
         <p class="text-sm text-gray-400">
-            Daftar seluruh booking laboratorium
+            Daftar booking laboratorium
         </p>
     </div>
 

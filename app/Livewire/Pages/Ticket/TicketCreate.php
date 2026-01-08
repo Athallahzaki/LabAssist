@@ -29,6 +29,14 @@ class TicketCreate extends Component
 
     public function mount()
     {
+        if (auth()->user()->isStudent()) {
+            $this->student_id = auth()->user()->student->id;
+
+            $this->ticket_status_id = Status::group('ticket')
+                ->where('code', 'open')
+                ->value('id');
+        }
+        
         $this->students = Student::all();
         $this->labs = Lab::all();
         $this->statuses = Status::group('ticket')->get();

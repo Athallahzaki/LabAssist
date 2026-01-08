@@ -17,22 +17,26 @@
             <form wire:submit.prevent="save" class="space-y-5">
 
                 {{-- MAHASISWA --}}
-                <div>
-                    <label class="block text-sm text-gray-400 mb-2">Mahasiswa</label>
-                    <select wire:model.defer="student_id"
-                        class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2
-                               text-sm text-white
-                               focus:ring-1 focus:ring-blue-500 focus:outline-none">
-                        <option value="">-- Pilih Mahasiswa --</option>
-                        @foreach ($students as $student)
-                            <option value="{{ $student->id }}">{{ $student->display_name }}</option>
-                        @endforeach
-                    </select>
+                @if (auth()->user()->isAdmin())
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Mahasiswa</label>
+                        <select wire:model.defer="student_id"
+                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2
+                                text-sm text-white
+                                focus:ring-1 focus:ring-blue-500 focus:outline-none">
+                            <option value="">-- Pilih Mahasiswa --</option>
+                            @foreach ($students as $student)
+                                <option value="{{ $student->id }}">{{ $student->display_name }}</option>
+                            @endforeach
+                        </select>
 
-                    @error('student_id')
-                        <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
-                    @enderror
-                </div>
+                        @error('student_id')
+                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                        @enderror
+                    </div>    
+                @else
+                    <input type="hidden" wire:model="student_id">
+                @endif
 
                 {{-- LAB --}}
                 <div>
@@ -66,22 +70,26 @@
                         @enderror
                     </div>
 
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2">Status Booking</label>
-                        <select wire:model.defer="booking_status_id"
-                            class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2
-                                   text-sm text-white
-                                   focus:ring-1 focus:ring-blue-500 focus:outline-none">
-                            <option value="">-- Pilih Status --</option>
-                            @foreach ($statuses as $status)
-                                <option value="{{ $status->id }}">{{ $status->label }}</option>
-                            @endforeach
-                        </select>
+                    @if(auth()->user()->isAdmin())
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Status Booking</label>
+                            <select wire:model.defer="booking_status_id"
+                                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2
+                                    text-sm text-white
+                                    focus:ring-1 focus:ring-blue-500 focus:outline-none">
+                                <option value="">-- Pilih Status --</option>
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status->id }}">{{ $status->label }}</option>
+                                @endforeach
+                            </select>
 
-                        @error('booking_status_id')
-                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
-                        @enderror
-                    </div>
+                            @error('booking_status_id')
+                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    @else
+                        <input type="hidden" wire:model="booking_status_id">
+                    @endif
                 </div>
 
                 {{-- JAM MULAI & JAM SELESAI --}}

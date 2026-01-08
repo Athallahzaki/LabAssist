@@ -14,7 +14,14 @@ class TicketIndex extends Component
     public $tickets;
 
     public function mount() {
-        $this->tickets = Ticket::with(['student', 'lab', 'status', 'assignments.admin'])->get();
+        if (auth()->user()->isStudent()) {
+            $this->tickets = Ticket::where('student_id', auth()->user()->student->id)
+                    ->with(['student', 'lab', 'status', 'assignments.admin'])
+                    ->get();
+        } else {
+            $this->tickets = Ticket::with(['student', 'lab', 'status', 'assignments.admin'])
+                    ->get();
+        }
     }
     
     public function delete($id)
