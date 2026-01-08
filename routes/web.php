@@ -5,9 +5,9 @@ use App\Livewire\Pages\Auth\Register;
 use App\Livewire\Pages\ExamplePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\BookingIndex;
-use App\Livewire\BookingCreate;
-use App\Livewire\BookingEdit;
+use App\Livewire\Pages\Booking\BookingIndex;
+use App\Livewire\Pages\Booking\BookingCreate;
+use App\Livewire\Pages\Booking\BookingEdit;
 use App\Livewire\Pages\Approval\BookingApproval;
 use App\Livewire\Pages\Approval\BookingApprovalHistory;
 use App\Livewire\Pages\Lab\LabCreate;
@@ -45,7 +45,7 @@ Route::middleware(['auth', 'role:admin,student'])->group(function () {
 
 Route::get('/booking', BookingIndex::class)->name('booking.index');
 Route::get('/booking/create', BookingCreate::class)->name('booking.create');
-Route::get('/booking/{id}/edit', BookingEdit::class)->name('booking.edit');
+Route::get('/booking/{booking}/edit', BookingEdit::class)->name('booking.edit');
 
 Route::get('/approval', BookingApproval::class)
     ->name('approval');

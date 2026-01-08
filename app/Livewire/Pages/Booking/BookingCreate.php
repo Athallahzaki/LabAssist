@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Pages\Booking;
 
 use Livewire\Component;
 use App\Models\Booking;
 use App\Models\Student;
 use App\Models\Lab;
 use App\Models\Status;
+use Masmerise\Toaster\Toaster;
 
 class BookingCreate extends Component
 {
+    #[Title('Create Booking')]
+
     public $student_id;
     public $lab_id;
     public $booking_date;
     public $booking_time_start;
     public $booking_time_end;
     public $booking_status_id;
+
+    public $students, $labs, $statuses;
 
     protected $rules = [
         'student_id' => 'required|exists:students,id',
@@ -25,6 +30,12 @@ class BookingCreate extends Component
         'booking_time_end' => 'required|after:booking_time_start',
         'booking_status_id' => 'required|exists:statuses,id',
     ];
+
+    public function mount() {
+        $this->students = Student::all();
+        $this->labs = Lab::all();
+        $this->statuses = Status::group('booking')->get();
+    }
 
     public function save()
     {
@@ -39,16 +50,13 @@ class BookingCreate extends Component
             'booking_status_id' => $this->booking_status_id,
         ]);
 
-        session()->flash('success', 'Booking berhasil ditambahkan');
+        Toaster::success('Booking berhasil ditambahkan.');
         return redirect()->route('booking.index');
     }
 
     public function render()
     {
-        return view('livewire.booking-create', [
-            'students' => Student::get(),
-            'labs' => Lab::get(),
-            'statuses' => Status::group('booking')->get(),
-        ])->layout('components.layouts.dashboard');
+        return view('livewire.pages.booking.booking-create')
+        ->layout('components.layouts.dashboard');
     }
 }

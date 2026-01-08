@@ -10,19 +10,12 @@
         </p>
     </div>
 
-    {{-- ALERT --}}
-    @if (session()->has('success'))
-        <div class="bg-green-500/15 text-green-400 border border-green-500/20 rounded-lg px-4 py-3">
-            {{ session('success') }}
-        </div>
-    @endif
-
     {{-- ACTION --}}
     <div>
         <a href="{{ route('booking.create') }}"
            class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
                   bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 transition">
-            + Tambah Booking
+            Tambah Booking
         </a>
     </div>
 
@@ -37,6 +30,7 @@
                         <th class="py-3 px-4">Lab</th>
                         <th class="py-3 px-4">Tanggal</th>
                         <th class="py-3 px-4">Jam</th>
+                        <th class="py-3 px-4">Status</th>
                         <th class="py-3 px-4 text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -56,6 +50,23 @@
                             <td class="py-3 px-4 text-gray-300">
                                 {{ $booking->booking_time_start }} - {{ $booking->booking_time_end }}
                             </td>
+                            {{-- STATUS --}}
+                            <td class="py-3 px-4">
+                                @php
+                                    $statusColor = match($booking->status->code ?? 'pending') {
+                                        'pending' => 'bg-blue-500/15 text-blue-400',
+                                        'approved' => 'bg-green-500/15 text-green-400',
+                                        'rejected' => 'bg-red-500/15 text-red-400',
+                                        'cancelled' => 'bg-red-500/15 text-red-400',
+                                        'completed' => 'bg-gray-500/15 text-gray-400',
+                                        default => 'bg-gray-500/15 text-gray-400',
+                                    };
+                                @endphp
+                                <span class="px-2.5 py-1 rounded-md text-xs font-medium {{ $statusColor }}">
+                                    {{ $booking->status->label ?? '-' }}
+                                </span>
+                            </td>
+                            {{-- AKSI --}}
                             <td class="py-3 px-4 text-center space-x-2">
                                 <a href="{{ route('booking.edit', $booking->id) }}"
                                    class="px-3 py-1.5 rounded-md text-xs
@@ -63,16 +74,17 @@
                                     Edit
                                 </a>
 
-                                <button wire:click="delete({{ $booking->id }})"
-                                        class="px-3 py-1.5 rounded-md text-xs
-                                               bg-red-500/15 text-red-400 hover:bg-red-500/25">
+                                <button
+                                    @click.prevent="if(confirm('Yakin ingin menghapus booking ini?')) { @this.call('delete', '{{ $booking->id }}') }"
+                                    class="px-3 py-1.5 rounded-md text-xs
+                                           bg-red-500/15 text-red-400 hover:bg-red-500/25">
                                     Hapus
                                 </button>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="py-6 text-center text-gray-500">
+                            <td colspan="6" class="py-6 text-center text-gray-500">
                                 Belum ada data booking
                             </td>
                         </tr>
