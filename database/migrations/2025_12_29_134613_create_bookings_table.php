@@ -19,6 +19,7 @@ return new class extends Migration
             $table->time('booking_time_start');
             $table->time('booking_time_end');
             $table->foreignId('booking_status_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

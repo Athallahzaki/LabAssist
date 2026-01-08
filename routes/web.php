@@ -5,6 +5,9 @@ use App\Livewire\Pages\Auth\Register;
 use App\Livewire\Pages\ExamplePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Pages\Booking\BookingIndex;
+use App\Livewire\Pages\Booking\BookingCreate;
+use App\Livewire\Pages\Booking\BookingEdit;
 use App\Livewire\Pages\Approval\BookingApproval;
 use App\Livewire\Pages\Approval\BookingApprovalHistory;
 use App\Livewire\Pages\Lab\LabCreate;
@@ -38,14 +41,18 @@ Route::middleware(['auth', 'role:admin,student'])->group(function () {
 
         return redirect()->route('login');
     })->name('logout');
-
-
-    Route::get('/approval', BookingApproval::class)
-        ->name('approval');
-
-    Route::get('/approval/history', BookingApprovalHistory::class)
-        ->name('approval.history');
 });
+
+Route::get('/booking', BookingIndex::class)->name('booking.index');
+Route::get('/booking/create', BookingCreate::class)->name('booking.create');
+Route::get('/booking/{booking}/edit', BookingEdit::class)->name('booking.edit');
+
+Route::get('/approval', BookingApproval::class)
+    ->name('approval');
+
+Route::get('/approval/history', BookingApprovalHistory::class)
+    ->name('approval.history');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/tickets', TicketIndex::class)->name('tickets.index');
