@@ -4,10 +4,13 @@ namespace App\Livewire\Pages\Ticket;
 
 use Livewire\Component;
 use App\Models\Ticket;
+use Livewire\Attributes\Title;
 use Masmerise\Toaster\Toaster;
 
 class TicketIndex extends Component
 {
+    #[Title('Tickets')]
+    
     public $tickets;
 
     public function mount() {

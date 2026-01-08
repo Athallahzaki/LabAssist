@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Student;
 use App\Models\Lab;
 use App\Models\Status;
+use Livewire\Attributes\Title;
 use Masmerise\Toaster\Toaster;
 
 class BookingCreate extends Component
