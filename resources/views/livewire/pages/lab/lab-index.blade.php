@@ -1,52 +1,90 @@
-<div>
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Lab List</h1>
-        <a href="{{ route('labs.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 ease-in-out">
-            + Add New Lab
+<div class="space-y-6">
+
+    {{-- HEADER --}}
+    <div>
+        <h2 class="text-2xl font-semibold text-white">
+            Daftar Lab
+        </h2>
+        <p class="text-sm text-gray-400">
+            Manajemen lab yang tersedia
+        </p>
+    </div>
+
+    {{-- ACTION --}}
+    <div>
+        <a href="{{ route('labs.create') }}"
+           class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
+                  bg-blue-500/15 text-blue-400
+                  hover:bg-blue-500/25 transition">
+            Tambah Lab
         </a>
     </div>
 
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+    {{-- CARD --}}
+    <div class="bg-gray-900 border border-gray-800 rounded-xl shadow-sm">
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Lab Name
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Capacity
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Actions
-                        </th>
+            <table class="w-full text-sm">
+                <thead class="border-b border-gray-800">
+                    <tr class="text-left text-gray-400">
+                        <th class="py-3 px-4">Nama Lab</th>
+                        <th class="py-3 px-4">Kapasitas</th>
+                        <th class="py-3 px-4">Status</th>
+                        <th class="py-3 px-4 text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
+
+                <tbody class="divide-y divide-gray-800">
                     @forelse($labs as $lab)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ $lab->lab_name }}</div>
+                        <tr class="hover:bg-gray-800/60 transition">
+                            <td class="py-3 px-4 text-white">
+                                {{ $lab->lab_name }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-500">{{ $lab->capacity }} Students</div>
+                            <td class="py-3 px-4 text-gray-300">
+                                {{ $lab->capacity }} Orang
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $lab->status->name === 'Available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $lab->status->name ?? 'Unknown' }}
+                            <td class="py-3 px-4">
+                                @php
+                                    // Tentukan warna badge berdasarkan status
+                                    switch ($lab->status->label ?? '') {
+                                        case 'Tersedia':
+                                            $badgeClasses = 'bg-green-500/15 text-green-400';
+                                            break;
+                                        case 'Dipakai':
+                                        case 'Perawatan':
+                                            $badgeClasses = 'bg-purple-500/15 text-purple-400';
+                                            break;
+                                        case 'Tidak Aktif':
+                                            $badgeClasses = 'bg-red-500/15 text-red-400';
+                                            break;
+                                        default:
+                                            $badgeClasses = 'bg-gray-500/15 text-gray-400';
+                                    }
+                                @endphp
+                                <span class="px-2.5 py-1 rounded-md text-xs font-medium {{ $badgeClasses }}">
+                                    {{ $lab->status->label ?? 'Unknown' }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <a href="{{ route('labs.edit', $lab) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
+                            <td class="py-3 px-4 text-center space-x-2">
+                                <a href="{{ route('labs.edit', $lab) }}"
+                                   class="px-3 py-1.5 rounded-md text-xs font-medium
+                                          bg-yellow-500/15 text-yellow-400
+                                          hover:bg-yellow-500/25 transition">
+                                    Edit
+                                </a>
+
+                                <button 
+                                @click.prevent="if(confirm('Yakin ingin menghapus lab ini?')) { @this.call('delete', '{{ $lab->id }}') }"
+                                class="px-3 py-1.5 rounded-md text-xs font-medium
+                                        bg-red-500/15 text-red-400
+                                        hover:bg-red-500/25 transition">
+                                    Hapus
+                                </button>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">
-                                No labs found.
+                            <td colspan="4" class="py-6 text-center text-gray-500">
+                                Tidak ada lab.
                             </td>
                         </tr>
                     @endforelse

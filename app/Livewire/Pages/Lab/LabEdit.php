@@ -4,8 +4,8 @@ namespace App\Livewire\Pages\Lab;
 
 use App\Models\Lab;
 use App\Models\Status;
-use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class LabEdit extends Component
 {
@@ -13,6 +13,7 @@ class LabEdit extends Component
     public $lab_name;
     public $capacity;
     public $lab_status_id;
+    public $statuses;
 
     public function mount(Lab $lab)
     {
@@ -20,6 +21,7 @@ class LabEdit extends Component
         $this->lab_name = $lab->lab_name;
         $this->capacity = $lab->capacity;
         $this->lab_status_id = $lab->lab_status_id;
+        $this->statuses = Status::group('lab')->get();
     }
 
     public function rules()
@@ -41,15 +43,14 @@ class LabEdit extends Component
             'lab_status_id' => $this->lab_status_id,
         ]);
 
+        Toaster::success('Lab berhasil diubah.');
+
         return redirect()->route('labs.index');
     }
 
     public function render()
     {
-        $statuses = Status::group('lab')->get();
-        return view('livewire.pages.lab.lab-edit', [
-            'statuses' => $statuses
-        ])
+        return view('livewire.pages.lab.lab-edit')
         ->layout('components.layouts.dashboard');
     }
 }

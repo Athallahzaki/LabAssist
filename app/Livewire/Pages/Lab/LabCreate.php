@@ -4,14 +4,19 @@ namespace App\Livewire\Pages\Lab;
 
 use App\Models\Lab;
 use App\Models\Status;
-use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Masmerise\Toaster\Toaster;
 
 class LabCreate extends Component
 {
     public $lab_name;
     public $capacity;
     public $lab_status_id;
+    public $statuses;
+
+    public function mount() {
+        $this->statuses = Status::group('lab')->get();
+    }
 
     public function rules()
     {
@@ -32,15 +37,14 @@ class LabCreate extends Component
             'lab_status_id' => $this->lab_status_id,
         ]);
 
+        Toaster::success('Lab berhasil dibuat.');
+
         return redirect()->route('labs.index');
     }
 
     public function render()
     {
-        $statuses = Status::group('lab')->get();
-        return view('livewire.pages.lab.lab-create', [
-            'statuses' => $statuses
-        ])
+        return view('livewire.pages.lab.lab-create')
         ->layout('components.layouts.dashboard');
     }
 }
