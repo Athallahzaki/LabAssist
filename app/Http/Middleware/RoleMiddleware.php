@@ -18,13 +18,34 @@ class RoleMiddleware
         $user = $request->user();
         
         if (!$user) {
-            abort(403, 'Unauthorized');
+            return $this->unauthorizedResponse(
+                $request,
+                'Unauthorized',
+                401
+            );
         };
         
         if (!in_array($user->role->role_code, $roles)) {
-            abort(403, 'You do not have the required role.');
+            return $this->unauthorizedResponse(
+                $request,
+                'You do not have the required role.',
+                403
+            );
         }
 
         return $next($request);
+    }
+
+    protected function unauthorizedResponse(Request $request, string $message, int $status)
+    {
+        // API → JSON
+        if ($request->is('api/*')) {
+            return response()->json([
+                'message' => $message,
+            ], $status);
+        }
+
+        // Web → HTML
+        abort($status, $message);
     }
 }
