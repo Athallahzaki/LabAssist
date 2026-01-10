@@ -18,6 +18,9 @@ use App\Livewire\Pages\Ticket\TicketIndex;
 use App\Livewire\Pages\Ticket\TicketCreate;
 use App\Livewire\Pages\Ticket\TicketEdit;
 use App\Livewire\Pages\Ticket\TicketAssign;
+use App\Livewire\Pages\User\UserCreate;
+use App\Livewire\Pages\User\UserEdit;
+use App\Livewire\Pages\User\UserIndex;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,10 +58,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     
     Route::get('/approval', BookingApproval::class)->name('approval.index');
     Route::get('/approval/history', BookingApprovalHistory::class)->name('approval.history');
-
+    
     Route::get('/booking/{booking}/edit', BookingEdit::class)->name('booking.edit');
     
     Route::get('/tickets/{ticket}/edit', TicketEdit::class)->name('tickets.edit');
     Route::get('/tickets/{ticket}/assign', TicketAssign::class)->name('tickets.assign');
+    
+    Route::get('/users', UserIndex::class)->name('users.index');
+    Route::get('/users/create', UserCreate::class)->name('users.create');
+    Route::get('/users/{user}/edit', UserEdit::class)->name('users.edit');
 });
 
