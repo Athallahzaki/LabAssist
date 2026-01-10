@@ -48,9 +48,27 @@ class BookingEdit extends Component
         $this->statuses = Status::group('booking')->get();
     }
 
+    private function hasTimeConflict(): bool
+    {
+        return Booking::where('lab_id', $this->lab_id)
+            ->whereDate('booking_date', $this->booking_date)
+            ->where('id', '!=', $this->booking->id)
+            ->where(function ($query) {
+                $query->where('booking_time_start', '<', $this->booking_time_end)
+                    ->where('booking_time_end', '>', $this->booking_time_start);
+            })
+            ->exists();
+    }
+
     public function update()
     {
         $this->validate();
+
+        if ($this->hasTimeConflict()) {
+            Toaster::error('Jadwal bentrok! Lab sudah digunakan di waktu tersebut.');
+            return;
+        }
+
         $this->booking->update([
             'student_id' => $this->student_id,
             'lab_id' => $this->lab_id,
@@ -63,6 +81,7 @@ class BookingEdit extends Component
         Toaster::success('Booking berhasil diubah');
         return redirect()->route('booking.index');
     }
+
 
     public function render()
     {
