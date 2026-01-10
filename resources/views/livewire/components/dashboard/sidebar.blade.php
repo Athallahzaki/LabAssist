@@ -45,6 +45,12 @@
                 <x-icon name='check-circle' />
                 <span>Approvals</span>
             </a>
+            <a href="{{ route('users.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                      {{ request()->routeIs('users.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
+                <x-icon name='users' />
+                <span>Users</span>
+            </a>
         @endif
 
     </nav>
