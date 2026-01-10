@@ -24,6 +24,16 @@ class BookingIndex extends Component
                     ->get();
         }
     }
+
+    public function delete($id)
+    {
+        $booking = Booking::findOrFail($id);
+        $booking->delete();
+
+        $this->bookings = $this->bookings->where('id', '!=', $id);
+
+        Toaster::success('booking berhasil dihapus.');
+    }
     
     public function render()
     {
