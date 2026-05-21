@@ -30,6 +30,14 @@
             <x-icon name='calendar' />
             <span>Bookings</span>
         </a>
+        @if(auth()->user()->isAdmin())
+            <a href="{{ route('approval.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                      {{ request()->routeIs('approval.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
+                <x-icon name='check-circle' />
+                <span>Approvals</span>
+            </a>
+        @endif
 
         <a href="{{ route('tickets.index') }}"
            class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
@@ -38,13 +46,14 @@
             <span>Tickets</span>
         </a>
 
+        <a href="{{ route('maintenance-logs.index') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
+                  {{ request()->routeIs('maintenance-logs.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
+            <x-icon name='document-text' />
+            <span>Maintenance Logs</span>
+        </a>
+        
         @if(auth()->user()->isAdmin())
-            <a href="{{ route('approval.index') }}"
-               class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
-                      {{ request()->routeIs('approval.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
-                <x-icon name='check-circle' />
-                <span>Approvals</span>
-            </a>
             <a href="{{ route('users.index') }}"
                class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
                       {{ request()->routeIs('users.*') ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }} transition">
