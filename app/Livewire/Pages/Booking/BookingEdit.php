@@ -45,7 +45,7 @@ class BookingEdit extends Component
 
         $this->students = Student::all();
         $this->labs = Lab::all();
-        $this->statuses = Status::group('booking')->get();
+        $this->statuses = Status::where('group', 'booking')->get();
     }
 
     private function hasTimeConflict(): bool

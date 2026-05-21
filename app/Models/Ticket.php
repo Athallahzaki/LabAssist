@@ -11,6 +11,7 @@ class Ticket extends Model
     protected $fillable = [
         'student_id',
         'lab_id',
+        'assigned_admin_id',
         'title',
         'description',
         'ticket_status_id',
@@ -30,10 +31,15 @@ class Ticket extends Model
     {
         return $this->belongsTo(Status::class, 'ticket_status_id');
     }
-
-    public function assignments()
+    
+    public function maintenanceLogs()
     {
-        return $this->hasMany(TicketAssignment::class);
+        return $this->hasMany(MaintenanceLog::class);
+    }
+
+    public function assignedAdmin()
+    {
+        return $this->belongsTo(Admin::class, 'assigned_admin_id');
     }
 }
 

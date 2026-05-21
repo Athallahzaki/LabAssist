@@ -40,7 +40,7 @@ class TicketEdit extends Component
 
         $this->students = Student::all();
         $this->labs = Lab::all();
-        $this->statuses = Status::group('ticket')->get();
+        $this->statuses = Status::where('group', 'ticket')->get();
     }
 
     public function save()

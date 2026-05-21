@@ -24,8 +24,13 @@ class Admin extends Model
         return $this->hasMany(Approval::class);
     }
 
-    public function ticketAssignments()
+    public function maintenanceLogs()
     {
-        return $this->hasMany(TicketAssignment::class);
+        return $this->hasMany(MaintenanceLog::class);
+    }
+
+    public function assignedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'assigned_admin_id');
     }
 }

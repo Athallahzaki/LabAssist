@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TicketAssignment extends Model
+class MaintenanceLog extends Model
 {
     protected $fillable = [
         'ticket_id',
         'admin_id',
-        'assigned_at',
+        'description',
+        'is_final',
     ];
 
     protected $casts = [
-        'assigned_at' => 'datetime',
+        'is_final' => 'boolean',
     ];
 
     public function ticket()

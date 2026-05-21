@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id');
             $table->foreignId('lab_id');
+            $table->foreignId('assigned_admin_id')->nullable();
             $table->string('title');
             $table->text('description');
             $table->foreignId('ticket_status_id');

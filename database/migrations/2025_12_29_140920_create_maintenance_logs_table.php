@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ticket_assignments', function (Blueprint $table) {
+        Schema::create('maintenance_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id');
             $table->foreignId('admin_id');
-            $table->dateTime('assigned_at');
+            $table->text('description');
+            $table->boolean('is_final')->default(false);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ticket_assignments');
+        Schema::dropIfExists('statuses');
     }
 };

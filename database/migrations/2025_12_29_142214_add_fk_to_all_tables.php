@@ -69,17 +69,24 @@ return new class extends Migration
                 ->references('id')->on('labs')
                 ->cascadeOnDelete();
 
+            $table->foreign('assigned_admin_id')
+                ->references('id')
+                ->on('admins')
+                ->nullOnDelete();
+
             $table->foreign('ticket_status_id')
                 ->references('id')->on('statuses');
         });
 
-        Schema::table('ticket_assignments', function (Blueprint $table) {
+        Schema::table('maintenance_logs', function (Blueprint $table) {
             $table->foreign('ticket_id')
-                ->references('id')->on('tickets')
+                ->references('id')
+                ->on('tickets')
                 ->cascadeOnDelete();
 
             $table->foreign('admin_id')
-                ->references('id')->on('admins')
+                ->references('id')
+                ->on('admins')
                 ->cascadeOnDelete();
         });
     }
@@ -89,7 +96,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('ticket_assignments', function (Blueprint $table) {
+        Schema::table('maintenance_logs', function (Blueprint $table) {
             $table->dropForeign(['ticket_id']);
             $table->dropForeign(['admin_id']);
         });
@@ -97,6 +104,7 @@ return new class extends Migration
         Schema::table('tickets', function (Blueprint $table) {
             $table->dropForeign(['student_id']);
             $table->dropForeign(['lab_id']);
+            $table->dropForeign(['assigned_admin_id']);
             $table->dropForeign(['ticket_status_id']);
         });
 

@@ -6,7 +6,6 @@ use Livewire\Component;
 use App\Models\Ticket;
 use App\Models\Admin;
 use App\Models\Status;
-use App\Models\TicketAssignment;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Title;
 use Masmerise\Toaster\Toaster;
@@ -25,6 +24,7 @@ class TicketAssign extends Component
 
     public function mount() {
         $this->admins = Admin::all();
+        $this->admin_id = $this->ticket->assigned_admin_id;
     }
 
     public function assign()
@@ -33,17 +33,12 @@ class TicketAssign extends Component
 
         DB::transaction(function () {
 
-            TicketAssignment::create([
-                'ticket_id' => $this->ticket->id,
-                'admin_id' => $this->admin_id,
-                'assigned_at' => now(),
-            ]);
-
-            $status = Status::group('ticket')
+            $status = Status::where('group', 'ticket')
                 ->where('code', 'in_progress')
                 ->firstOrFail();
 
             $this->ticket->update([
+                'assigned_admin_id' => $this->admin_id,
                 'ticket_status_id' => $status->id
             ]);
         });

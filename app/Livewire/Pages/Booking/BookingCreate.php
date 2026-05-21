@@ -36,14 +36,14 @@ class BookingCreate extends Component
         if (auth()->user()->isStudent()) {
             $this->student_id = auth()->user()->student->id;
 
-            $this->booking_status_id = Status::group('booking')
+            $this->booking_status_id = Status::where('group', 'booking')
                 ->where('code', 'pending')
                 ->value('id');
         }
 
         $this->students = Student::all();
         $this->labs = Lab::all();
-        $this->statuses = Status::group('booking')->get();
+        $this->statuses = Status::where('group', 'booking')->get();
     }
 
     private function hasTimeConflict(): bool

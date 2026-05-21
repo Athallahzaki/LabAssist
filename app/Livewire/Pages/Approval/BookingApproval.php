@@ -23,7 +23,7 @@ class BookingApproval extends Component
     ];
 
     public function mount() {
-        $bookingPendingStatus = Status::group('booking')->where('code', 'pending')->firstOrFail();
+        $bookingPendingStatus = Status::where('group', 'booking')->where('code', 'pending')->firstOrFail();
         $this->bookings = Booking::with(['student', 'lab', 'status'])
                 ->where('booking_status_id', $bookingPendingStatus->id)
                 ->get();
@@ -47,8 +47,8 @@ class BookingApproval extends Component
 
             $booking = Booking::with('status')->findOrFail($bookingId);
 
-            $bookingStatus = Status::group('booking')->where('code', $action)->firstOrFail();
-            $approvalStatus = Status::group('approval')->where('code', $action)->firstOrFail();
+            $bookingStatus = Status::where('group', 'booking')->where('code', $action)->firstOrFail();
+            $approvalStatus = Status::where('group', 'approval')->where('code', $action)->firstOrFail();
 
             // Update booking status
             $booking->update([

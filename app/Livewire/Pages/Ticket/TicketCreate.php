@@ -32,14 +32,14 @@ class TicketCreate extends Component
         if (auth()->user()->isStudent()) {
             $this->student_id = auth()->user()->student->id;
 
-            $this->ticket_status_id = Status::group('ticket')
+            $this->ticket_status_id = Status::where('group', 'ticket')
                 ->where('code', 'open')
                 ->value('id');
         }
         
         $this->students = Student::all();
         $this->labs = Lab::all();
-        $this->statuses = Status::group('ticket')->get();
+        $this->statuses = Status::where('group', 'ticket')->get();
     }
 
     public function save()

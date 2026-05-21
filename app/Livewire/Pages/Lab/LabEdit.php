@@ -24,7 +24,7 @@ class LabEdit extends Component
         $this->lab_name = $lab->lab_name;
         $this->capacity = $lab->capacity;
         $this->lab_status_id = $lab->lab_status_id;
-        $this->statuses = Status::group('lab')->get();
+        $this->statuses = Status::where('group', 'lab')->get();
     }
 
     public function rules()

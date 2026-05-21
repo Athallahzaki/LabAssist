@@ -3,7 +3,7 @@
     {{-- HEADER --}}
     <div>
         <h2 class="text-2xl font-semibold text-white">
-            Assign Ticket
+            {{ $ticket->assigned_admin_id ? 'Reassign Ticket' : 'Assign Ticket' }}
         </h2>
         <p class="text-sm text-gray-400">
             Tentukan admin penanggung jawab ticket
@@ -27,6 +27,15 @@
                 <span class="text-gray-400">Lab:</span>
                 <span class="text-gray-300">{{ $ticket->lab->lab_name ?? '-' }}</span>
             </div>
+
+            @if ($ticket->assignedAdmin)
+                <div class="text-sm text-gray-400 mb-2">
+                    Saat ini ditangani oleh:
+                    <span class="text-white font-medium">
+                        {{ $ticket->assignedAdmin->display_name }}
+                    </span>
+                </div>
+            @endif
         </div>
     </div>
 

@@ -18,7 +18,7 @@ class LabCreate extends Component
     public $statuses;
 
     public function mount() {
-        $this->statuses = Status::group('lab')->get();
+        $this->statuses = Status::where('group', 'lab')->get();
     }
 
     public function rules()

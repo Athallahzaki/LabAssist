@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Status;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class StatusSeeder extends Seeder
@@ -36,6 +35,7 @@ class StatusSeeder extends Seeder
             // ================= TICKET =================
             ['group' => 'ticket', 'code' => 'open',        'label' => 'Dibuka'],
             ['group' => 'ticket', 'code' => 'in_progress', 'label' => 'Sedang Ditangani'],
+            ['group' => 'ticket', 'code' => 'finished', 'label' => 'Menunggu Review'],
             ['group' => 'ticket', 'code' => 'resolved',    'label' => 'Terselesaikan'],
             ['group' => 'ticket', 'code' => 'closed',      'label' => 'Ditutup'],
 

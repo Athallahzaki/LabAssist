@@ -61,14 +61,12 @@
                                 </td>
 
                                 <td class="py-3 px-4 text-gray-300">
-                                    @php
-                                        $assignment = $ticket->assignments->last();
-                                    @endphp
-
-                                    @if ($assignment)
-                                        {{ $assignment->admin->display_name ?? '-' }}
+                                    @if ($ticket->assignedAdmin)
+                                        {{ $ticket->assignedAdmin->display_name }}
                                     @else
-                                        <span class="italic text-gray-500">Belum ditangani</span>
+                                        <span class="italic text-gray-500">
+                                            Belum ditangani
+                                        </span>
                                     @endif
                                 </td>
 
