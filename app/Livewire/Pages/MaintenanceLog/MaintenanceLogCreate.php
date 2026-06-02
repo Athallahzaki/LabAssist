@@ -28,6 +28,11 @@ class MaintenanceLogCreate extends Component
         $this->ticket = $ticket;
 
         abort_unless(
+            $ticket->canCreateMaintenanceLog(auth()->user()->admin),
+            403
+        );
+
+        abort_unless(
             $ticket->assigned_admin_id === auth()->user()->admin->id,
             403
         );
@@ -37,6 +42,11 @@ class MaintenanceLogCreate extends Component
         MaintenanceLogService $service
     )
     {
+        abort_unless(
+            $this->ticket->canCreateMaintenanceLog(auth()->user()->admin),
+            403
+        );
+
         $this->validate();
 
         try {

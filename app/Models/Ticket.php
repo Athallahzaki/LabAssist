@@ -41,5 +41,12 @@ class Ticket extends Model
     {
         return $this->belongsTo(Admin::class, 'assigned_admin_id');
     }
+
+    public function canCreateMaintenanceLog(Admin $admin): bool
+    {
+        return
+            $this->assigned_admin_id === $admin->id
+            && $this->status->code === 'in_progress';
+    }
 }
 

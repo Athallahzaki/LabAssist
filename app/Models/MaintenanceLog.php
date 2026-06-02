@@ -26,4 +26,22 @@ class MaintenanceLog extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function canBeEditedBy(Admin $admin): bool
+    {
+        $latestLog = $this->ticket
+            ->maintenanceLogs()
+            ->latest()
+            ->first();
+
+        if (!$latestLog) {
+            return false;
+        }
+
+        return
+            $latestLog->id === $this->id
+            && !$this->is_final
+            && $this->ticket->status->code === 'in_progress'
+            && $this->admin_id === $admin->id;
+    }
 }

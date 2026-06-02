@@ -17,6 +17,10 @@
 
         @forelse($assignedTickets as $ticket)
 
+            @php
+                $lastLog = $ticket->maintenanceLogs->last()
+            @endphp
+
             <div class="w-105
                         shrink-0
                         bg-gray-900
@@ -101,9 +105,9 @@
 
                                 <div class="text-sm text-white leading-relaxed">
 
-                                    @if($ticket->maintenanceLogs->last())
+                                    @if($lastLog)
 
-                                        {{ $ticket->maintenanceLogs->last()->created_at->diffForHumans() }}
+                                        {{ $lastLog->created_at->diffForHumans() }}
 
                                     @else
 
@@ -120,20 +124,37 @@
                     </div>
 
                     {{-- ACTION --}}
-                    <div class="mt-6">
+                    <div class="mt-6 flex gap-4">
 
-                        <a href="{{ route('maintenance-logs.create', $ticket) }}"
-                        class="inline-flex items-center justify-center
-                                w-full
-                                px-4 py-3
-                                rounded-xl
-                                text-sm font-medium
-                                bg-blue-500/15 text-blue-400
-                                hover:bg-blue-500/25 transition">
+                        @if($ticket->canCreateMaintenanceLog(auth()->user()->admin))
+                            <a href="{{ route('maintenance-logs.create', $ticket) }}"
+                            class="inline-flex items-center justify-center
+                                    w-full
+                                    px-4 py-3
+                                    rounded-xl
+                                    text-sm font-medium
+                                    bg-blue-500/15 text-blue-400
+                                    hover:bg-blue-500/25 transition">
 
-                            Tambah Log
+                                Tambah Log
 
-                        </a>
+                            </a>
+                        @endif
+
+                        @if($lastLog && $lastLog->canBeEditedBy(auth()->user()->admin))
+                            <a href="{{ route('maintenance-logs.edit', $lastLog->id) }}"
+                            class="inline-flex items-center justify-center
+                                    w-full
+                                    px-4 py-3
+                                    rounded-xl
+                                    text-sm font-medium
+                                    bg-yellow-500/15 text-yellow-400
+                                    hover:bg-yellow-500/25 transition">
+
+                                Edit Log
+
+                            </a>
+                        @endif
 
                     </div>
 

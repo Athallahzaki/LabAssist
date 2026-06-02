@@ -2,7 +2,6 @@
 
 use App\Livewire\Pages\Auth\Login;
 use App\Livewire\Pages\Auth\Register;
-use App\Livewire\Pages\ExamplePage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Pages\Booking\BookingIndex;
@@ -15,6 +14,7 @@ use App\Livewire\Pages\Lab\LabCreate;
 use App\Livewire\Pages\Lab\LabEdit;
 use App\Livewire\Pages\Lab\LabIndex;
 use App\Livewire\Pages\MaintenanceLog\MaintenanceLogCreate;
+use App\Livewire\Pages\MaintenanceLog\MaintenanceLogEdit;
 use App\Livewire\Pages\MaintenanceLog\MaintenanceLogIndex;
 use App\Livewire\Pages\Ticket\TicketIndex;
 use App\Livewire\Pages\Ticket\TicketCreate;
@@ -69,6 +69,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/tickets/{ticket}/assign', TicketAssign::class)->name('tickets.assign');
 
     Route::get('/maintenance-logs/create/{ticket}', MaintenanceLogCreate::class)->name('maintenance-logs.create');
+    Route::get('/maintenance-logs/edit/{maintenanceLog}', MaintenanceLogEdit::class)->name('maintenance-logs.edit');
     
     Route::get('/users', UserIndex::class)->name('users.index');
     Route::get('/users/create', UserCreate::class)->name('users.create');
