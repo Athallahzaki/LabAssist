@@ -48,5 +48,17 @@ class Ticket extends Model
             $this->assigned_admin_id === $admin->id
             && $this->status->code === 'in_progress';
     }
+
+    public function canBeReviewed(): bool
+    {
+        return $this->status?->code === 'finished';
+    }
+
+    public function isDone(): bool
+    {
+        return 
+            $this->status?->code === 'resolved'
+            || $this->status?->code === 'closed';
+    }
 }
 

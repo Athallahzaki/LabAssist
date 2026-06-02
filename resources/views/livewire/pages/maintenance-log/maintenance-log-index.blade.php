@@ -156,6 +156,34 @@
                             </a>
                         @endif
 
+                        @if($ticket->canBeReviewed())
+                            <a href="{{ route('maintenance-logs.review', $ticket) }}"
+                            class="inline-flex items-center justify-center
+                                    w-full
+                                    px-4 py-3
+                                    rounded-xl
+                                    text-sm font-medium
+                                    bg-green-500/15 text-green-400
+                                    hover:bg-green-500/25 transition">
+
+                                Review Ticket
+
+                            </a>
+                        @endif
+
+                        @if($ticket->isDone())
+                            <div class="inline-flex items-center justify-center
+                                    w-full
+                                    px-4 py-3
+                                    rounded-xl
+                                    text-sm font-medium
+                                    bg-gray-800/60 text-gray-500">
+
+                                Ticket sudah Selesai
+
+                            </div>
+                        @endif
+
                     </div>
 
                 </div>

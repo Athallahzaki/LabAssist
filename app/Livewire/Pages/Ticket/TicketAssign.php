@@ -36,10 +36,18 @@ class TicketAssign extends Component
             $status = Status::where('group', 'ticket')
                 ->where('code', 'in_progress')
                 ->firstOrFail();
+            
+            $lab_status = Status::where('group', 'lab')
+                ->where('code', 'maintenance')
+                ->firstOrFail();
 
             $this->ticket->update([
                 'assigned_admin_id' => $this->admin_id,
                 'ticket_status_id' => $status->id
+            ]);
+
+            $this->ticket->lab->update([
+                'lab_status_id' => $lab_status->id
             ]);
         });
 

@@ -14,88 +14,83 @@
     </div>
 
     {{-- TICKET INFO --}}
-    <div class="bg-gray-900 border border-gray-800 rounded-xl p-5">
+    <div class="bg-gray-900 border border-gray-800 rounded-xl shadow-sm">
+        <div class="p-5 space-y-5">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            {{-- TICKET --}}
-            <div>
-
-                <div class="text-sm text-gray-400 mb-1">
-                    Ticket
-                </div>
-
-                <div class="text-white font-medium">
-                    {{ $ticket->title }}
-                </div>
-
-            </div>
-
-            {{-- LAB --}}
-            <div>
-
-                <div class="text-sm text-gray-400 mb-1">
-                    Laboratorium
-                </div>
-
-                <div class="text-white font-medium">
-                    {{ $ticket->lab->lab_name }}
-                </div>
-
-            </div>
-
-            {{-- STATUS --}}
-            <div>
-
-                <div class="text-sm text-gray-400 mb-1">
-                    Status Ticket
-                </div>
-
+                {{-- TICKET --}}
                 <div>
+                    <div class="text-sm text-gray-400 mb-1">
+                        Judul Ticket
+                    </div>
+
+                    <div class="text-white font-medium">
+                        {{ $ticket->title }}
+                    </div>
+                </div>
+
+                {{-- STATUS --}}
+                <div>
+                    <div class="text-sm text-gray-400 mb-1">
+                        Status Ticket
+                    </div>
+
                     <span class="px-2.5 py-1 rounded-md text-xs font-medium
                         bg-indigo-500/15 text-indigo-400">
-
                         {{ $ticket->status->label }}
-
                     </span>
                 </div>
 
+                {{-- MAHASISWA --}}
+                <div>
+                    <div class="text-sm text-gray-400 mb-1">
+                        Mahasiswa
+                    </div>
+
+                    <div class="text-white font-medium">
+                        {{ $ticket->student->display_name }}
+                    </div>
+                </div>
+
+                {{-- LAB --}}
+                <div>
+                    <div class="text-sm text-gray-400 mb-1">
+                        Laboratorium
+                    </div>
+
+                    <div class="text-white font-medium">
+                        {{ $ticket->lab->lab_name }}
+                    </div>
+                </div>
+
+                {{-- ASSIGNED ADMIN --}}
+                <div>
+                    <div class="text-sm text-gray-400 mb-1">
+                        Assigned Admin
+                    </div>
+
+                    <div class="text-white font-medium">
+                        {{ $ticket->assignedAdmin?->display_name ?? '-' }}
+                    </div>
+                </div>
+
             </div>
 
-            {{-- ASSIGNED --}}
+            {{-- DESKRIPSI KERUSAKAN --}}
             <div>
+                <label class="block text-sm text-gray-400 mb-2">
+                    Deskripsi Kerusakan
+                </label>
 
-                <div class="text-sm text-gray-400 mb-1">
-                    Assigned Admin
+                <div class="border bg-gray-800 border-gray-700 rounded-lg p-3">
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        {{ $ticket->description }}
+                    </p>
                 </div>
-
-                <div class="text-white font-medium">
-                    {{ $ticket->assignedAdmin->display_name ?? '-' }}
-                </div>
-
             </div>
 
         </div>
-        
-        {{-- DESKRIPSI KERUSAKAN --}}
-        <div class="mt-4">
-
-            <label class="block text-sm text-gray-400 mb-2">
-                Deskripsi Kerusakan
-            </label>
-
-            <div class="border bg-gray-800 border-gray-700 rounded-lg p-3">
-
-                <p class="text-sm text-gray-300 leading-relaxed">
-
-                    {{ $ticket->description }}
-
-                </p>    
-
-            </div>
-
-        </div>
-        
     </div>
 
     {{-- FORM --}}

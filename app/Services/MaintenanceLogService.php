@@ -41,14 +41,9 @@ class MaintenanceLogService
                 );
             }
 
-            if (
-                $isFinal &&
-                $ticket->maintenanceLogs()
-                    ->where('is_final', true)
-                    ->exists()
-            ) {
+            if ($ticket->status->code === 'finished') {
                 throw new \Exception(
-                    'Final maintenance log sudah ada.'
+                    'Ticket sedang menunggu review.'
                 );
             }
 

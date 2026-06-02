@@ -16,6 +16,7 @@ use App\Livewire\Pages\Lab\LabIndex;
 use App\Livewire\Pages\MaintenanceLog\MaintenanceLogCreate;
 use App\Livewire\Pages\MaintenanceLog\MaintenanceLogEdit;
 use App\Livewire\Pages\MaintenanceLog\MaintenanceLogIndex;
+use App\Livewire\Pages\MaintenanceLog\MaintenanceReview;
 use App\Livewire\Pages\Ticket\TicketIndex;
 use App\Livewire\Pages\Ticket\TicketCreate;
 use App\Livewire\Pages\Ticket\TicketEdit;
@@ -68,8 +69,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/tickets/{ticket}/edit', TicketEdit::class)->name('tickets.edit');
     Route::get('/tickets/{ticket}/assign', TicketAssign::class)->name('tickets.assign');
 
-    Route::get('/maintenance-logs/create/{ticket}', MaintenanceLogCreate::class)->name('maintenance-logs.create');
-    Route::get('/maintenance-logs/edit/{maintenanceLog}', MaintenanceLogEdit::class)->name('maintenance-logs.edit');
+    Route::get('/maintenance-logs/{ticket}/create', MaintenanceLogCreate::class)->name('maintenance-logs.create');
+    Route::get('/maintenance-logs/{maintenanceLog}/edit', MaintenanceLogEdit::class)->name('maintenance-logs.edit');
+    Route::get('/maintenance-logs/{ticket}/review', MaintenanceReview::class)->name('maintenance-logs.review');
     
     Route::get('/users', UserIndex::class)->name('users.index');
     Route::get('/users/create', UserCreate::class)->name('users.create');
