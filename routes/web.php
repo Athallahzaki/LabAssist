@@ -21,6 +21,7 @@ use App\Livewire\Pages\Ticket\TicketIndex;
 use App\Livewire\Pages\Ticket\TicketCreate;
 use App\Livewire\Pages\Ticket\TicketEdit;
 use App\Livewire\Pages\Ticket\TicketAssign;
+use App\Livewire\Pages\Ticket\TicketShow;
 use App\Livewire\Pages\User\UserCreate;
 use App\Livewire\Pages\User\UserEdit;
 use App\Livewire\Pages\User\UserIndex;
@@ -44,6 +45,7 @@ Route::middleware(['auth', 'role:admin,student'])->group(function () {
     
     Route::get('/tickets', TicketIndex::class)->name('tickets.index');
     Route::get('/tickets/create', TicketCreate::class)->name('tickets.create');
+    Route::get('/tickets/{ticket}', TicketShow::class)->name('tickets.show');
 
     Route::get('/maintenance-logs', MaintenanceLogIndex::class)->name('maintenance-logs.index');
 

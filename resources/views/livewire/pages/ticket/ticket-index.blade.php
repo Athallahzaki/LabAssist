@@ -72,7 +72,7 @@
 
 
                                 <td class="py-3 px-4 text-center space-x-2">
-                                    <a href="{{ route('maintenance-logs.edit', $ticket) }}"
+                                    <a href="{{ route('tickets.show', $ticket) }}"
                                     class="px-3 py-1.5 rounded-md text-xs font-medium
                                             bg-indigo-500/15 text-indigo-400
                                             hover:bg-indigo-500/25 transition">
