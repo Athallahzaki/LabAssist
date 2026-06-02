@@ -248,10 +248,6 @@
                                 Dibuat
                             </th>
 
-                            <th class="py-3 px-4 text-center">
-                                Aksi
-                            </th>
-
                         </tr>
                     </thead>
 
@@ -339,45 +335,6 @@
                                         <div class="text-xs text-gray-500">
                                             {{ $log->created_at->diffForHumans() }}
                                         </div>
-
-                                    </div>
-
-                                </td>
-
-                                {{-- ACTIONS --}}
-                                <td class="py-3 px-4">
-
-                                    <div class="flex items-center justify-center gap-2">
-
-                                        {{-- DETAIL --}}
-                                        {{-- <a href="{{ route('maintenance-logs.show', $log) }}"
-                                        class="px-3 py-1.5 rounded-md text-xs font-medium
-                                                bg-indigo-500/15 text-indigo-400
-                                                hover:bg-indigo-500/25 transition">
-
-                                            Detail
-
-                                        </a> --}}
-
-                                        {{-- EDIT --}}
-                                        {{-- @if(auth()->user()->isAdmin())
-
-                                            @if(
-                                                $log->admin_id === auth()->user()->admin->id
-                                            )
-
-                                                <a href="{{ route('maintenance-logs.edit', $log) }}"
-                                                class="px-3 py-1.5 rounded-md text-xs font-medium
-                                                        bg-yellow-500/15 text-yellow-400
-                                                        hover:bg-yellow-500/25 transition">
-
-                                                    Edit
-
-                                                </a>
-
-                                            @endif
-
-                                        @endif --}}
 
                                     </div>
 

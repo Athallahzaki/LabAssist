@@ -72,7 +72,14 @@
 
 
                                 <td class="py-3 px-4 text-center space-x-2">
-                                    @if(auth()->user()->isAdmin())
+                                    <a href="{{ route('maintenance-logs.edit', $ticket) }}"
+                                    class="px-3 py-1.5 rounded-md text-xs font-medium
+                                            bg-indigo-500/15 text-indigo-400
+                                            hover:bg-indigo-500/25 transition">
+                                        Detail
+                                    </a>
+                                    
+                                    @if(auth()->user()->isAdmin() && !$ticket->isDone())
                                     <a href="{{ route('tickets.edit', $ticket) }}"
                                        class="px-3 py-1.5 rounded-md text-xs font-medium
                                               bg-yellow-500/15 text-yellow-400
