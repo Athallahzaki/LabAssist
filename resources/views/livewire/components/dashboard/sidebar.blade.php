@@ -1,4 +1,4 @@
-<aside class="w-64 bg-slate-900 text-slate-100 flex flex-col">
+<aside class="w-64 h-screen sticky top-0 bg-slate-900 text-slate-100 flex flex-col">
 
     <!-- Logo -->
     <div class="h-16 flex items-center px-6 border-b border-slate-800">
@@ -8,7 +8,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 px-4 py-6 space-y-1">
+    <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1">
 
         <a href="{{ route('dashboard') }}"
            class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
