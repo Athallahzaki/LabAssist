@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\Booking;
 use Livewire\Component;
 use App\Models\Booking;
 use Livewire\Attributes\Title;
+use Masmerise\Toaster\Toaster;
 
 class BookingIndex extends Component
 {
