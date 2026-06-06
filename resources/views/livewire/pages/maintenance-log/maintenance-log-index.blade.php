@@ -18,18 +18,19 @@
         @forelse($assignedTickets as $ticket)
 
             @php
-                $lastLog = $ticket->maintenanceLogs->last()
+                $lastLog = $ticket->maintenanceLogs->last();
             @endphp
 
-            <div class="w-105
-                        shrink-0
-                        bg-gray-900
-                        border border-gray-800
-                        rounded-xl
-                        p-5
-                        shadow-sm
-                        hover:border-gray-700
-                        transition">
+            <div data-testid="assigned-ticket-{{ $ticket->id }}" 
+                class="w-105
+                shrink-0
+                bg-gray-900
+                border border-gray-800
+                rounded-xl
+                p-5
+                shadow-sm
+                hover:border-gray-700
+                transition">
 
                 <div class="flex flex-col h-full justify-between">
 
@@ -42,7 +43,8 @@
                             <div class="space-y-2 flex-1 min-w-0">
 
                                 {{-- TITLE --}}
-                                <h3 class="text-lg font-semibold text-white
+                                <h3 data-testid="ticket-title-{{ $ticket->id }}"
+                                class="text-lg font-semibold text-white
                                         wrap-break-word leading-relaxed">
 
                                     {{ $ticket->title }}
@@ -61,7 +63,8 @@
                             {{-- STATUS --}}
                             <div class="shrink-0">
 
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium
+                                <span data-testid="ticket-status-{{ $ticket->id }}"
+                                class="px-2.5 py-1 rounded-md text-xs font-medium
                                     bg-indigo-500/15 text-indigo-400">
 
                                     {{ $ticket->status->label }}
@@ -85,7 +88,8 @@
 
                                 </div>
 
-                                <div class="text-2xl font-semibold text-white">
+                                <div data-testid="total-log-{{ $ticket->id }}"
+                                class="text-2xl font-semibold text-white">
 
                                     {{ $ticket->maintenanceLogs->count() }}
 
@@ -127,7 +131,8 @@
                     <div class="mt-6 flex gap-4">
 
                         @if($ticket->canCreateMaintenanceLog(auth()->user()->admin))
-                            <a href="{{ route('maintenance-logs.create', $ticket) }}"
+                            <a data-testid="create-log-{{ $ticket->id }}"
+                            href="{{ route('maintenance-logs.create', $ticket) }}"
                             class="inline-flex items-center justify-center
                                     w-full
                                     px-4 py-3
@@ -142,7 +147,8 @@
                         @endif
 
                         @if($lastLog && $lastLog->canBeEditedBy(auth()->user()->admin))
-                            <a href="{{ route('maintenance-logs.edit', $lastLog->id) }}"
+                            <a data-testid="edit-log-{{ $ticket->id }}"
+                            href="{{ route('maintenance-logs.edit', $lastLog->id) }}"
                             class="inline-flex items-center justify-center
                                     w-full
                                     px-4 py-3
@@ -157,7 +163,8 @@
                         @endif
 
                         @if($ticket->canBeReviewed())
-                            <a href="{{ route('maintenance-logs.review', $ticket) }}"
+                            <a data-testid="review-ticket-{{ $ticket->id }}"
+                            href="{{ route('maintenance-logs.review', $ticket) }}"
                             class="inline-flex items-center justify-center
                                     w-full
                                     px-4 py-3
@@ -256,7 +263,8 @@
 
                         @forelse ($logs as $log)
 
-                            <tr class="hover:bg-gray-800/60 transition">
+                            <tr data-testid="log-row-{{ $log->id }}"
+                            class="hover:bg-gray-800/60 transition">
 
                                 {{-- TICKET --}}
                                 <td class="py-3 px-4">

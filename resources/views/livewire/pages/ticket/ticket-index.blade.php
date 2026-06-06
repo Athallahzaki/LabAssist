@@ -40,7 +40,8 @@
 
                     <tbody class="divide-y divide-gray-800">
                         @forelse ($tickets as $ticket)
-                            <tr class="hover:bg-gray-800/60 transition">
+                            <tr data-testid="ticket-row-{{ $ticket->id }}"
+                            class="hover:bg-gray-800/60 transition">
                                 <td class="py-3 px-4 text-white">
                                     {{ $ticket->title }}
                                 </td>
